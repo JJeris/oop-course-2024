@@ -11,6 +11,14 @@ public class RandomPerson {
 	// HINT: use Alt+Shift+A to switch to Block selection (multi-line cursor)
 	// to edit list of all properties at once
 
+	String name;
+	int age;
+	float weight;
+	boolean isFemale; 
+	char smile;
+
+
+
 	// TODO Select menu "Source — Generate Getters and Setters..." then select
 	// all properties and generate _public_ getters and setters for all of them
 }
