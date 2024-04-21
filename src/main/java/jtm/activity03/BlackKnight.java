@@ -20,17 +20,30 @@ public class BlackKnight {
 	public boolean alive; // is knight alive
 
 	public static void setBattle(int initialNumber) {
-		// TODO initialize array of knights with the passed size.
 		// Reset total numbers of total, alive and dead knights to zero
+		knights = new BlackKnight [initialNumber];
+		totalKnights = 0;
+		aliveKnights = 0;
+		deadKnights = 0;
+
 	}
 
 	public BlackKnight(String name) {
 		// TODO set name of newly created knight
+		this.name = name;
 		// 1. set proper count of his arms, legs and head,
+		arms = 2;
+		legs = 2;
+		head = 1;
 		// 2. set his status to alive
+		alive = true;
 		// 3. put reference of this knight into next free cell of knights static
 		// array
+		knights[aliveKnights] = this;
+
 		// 4. increase number of total and alive knights of static counters
+		aliveKnights++;
+		totalKnights++;
 		// HINT: use "this.name" to access name of knight which otherwise is shadowed
 		// by parameter of constructor, which is also called "name"
 	}
@@ -40,7 +53,15 @@ public class BlackKnight {
 		// If knight is dead, return "Only chicken beats dead!"
 		// If knight has some arms, cut one off and return "Tis but a scratch!"
 		// Else return just "Haah!"
-		return "";
+		if (alive == false) {
+			return "Only chicken beats dead!";
+		}
+		if (arms > 0) {
+			arms--;
+			return "Tis but a scratch!";
+		}
+
+		return "Haah!";
 	}
 
 	public String cutOffLeg() {
@@ -48,7 +69,15 @@ public class BlackKnight {
 		// If knight is dead, return "Only chicken beats dead!"
 		// If knight has some legs, cut one off and return "Had worse!"
 		// Else return just "Haah!"
-		return "";
+		if (alive == false) {
+			return "Only chicken beats dead!";
+		}
+		if (legs > 0) {
+			legs--;
+			return "Had worse!";
+		}
+
+		return "Haah!";
 	}
 
 	public String cutOffHead() {
