@@ -89,7 +89,26 @@ public class BlackKnight {
 		// "You'l never win! Arthur, Cnut will still fight!"
 		// Where "Arthur, Cnut" are names of still alive knights
 		// Else return "You'l burn in hell forever!"
-		return "";
-	}
-
+		if (alive == false) {
+			return "Only chicken beats dead!";
+		}
+		if (head > 0) {
+			head--;
+			alive = false;
+			aliveKnights--;
+			deadKnights++;
+			String currentAliveKnights = "";
+			String delimiter = "";
+			for (BlackKnight knight : knights) {
+				if (knight.alive == true) {
+					currentAliveKnights = currentAliveKnights + delimiter + knight.name;
+					delimiter = ", ";
+				}
+			}
+			if (!"".equals(currentAliveKnights)) {
+				return "You'l never win! " + currentAliveKnights + " will still fight!";
+			}
+		}
+		return "You'l burn in hell forever!";
+    }
 }

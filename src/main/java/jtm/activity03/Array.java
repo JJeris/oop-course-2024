@@ -17,8 +17,7 @@ public class Array {
 
 		array = new int[args.length];
 
-//		for (int i = 0; i < args.length; i++) {
-		for (int i = 0; i < args.length - 1; i++) { // Lekcijā šādi.
+		for (int i = 0; i < args.length; i++) {
 			array[i] = Integer.parseInt(args[i]);
 		}
 
