@@ -15,9 +15,10 @@ public class RandomPerson {
 	private float weight;
 	private boolean isFemale;
 	private char smile;
-
+ 
 	public void setName(String name) {
-		this.name = name;
+		this.name = name1;
+
 	}
 
 	public void setSmile(char smile) {
