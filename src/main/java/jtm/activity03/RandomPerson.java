@@ -17,7 +17,7 @@ public class RandomPerson {
 	private char smile;
  
 	public void setName(String name) {
-		this.name = name1;
+		this.name = name;
 
 	}
 
