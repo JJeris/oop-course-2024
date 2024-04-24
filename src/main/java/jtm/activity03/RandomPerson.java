@@ -10,6 +10,7 @@ public class RandomPerson {
 	// isFemale as boolean;
 	// smile as char
 
+	// THIS IS A TEST
 	private String name;
 	private int age;
 	private float weight;
