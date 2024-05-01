@@ -15,9 +15,18 @@ public class Ship extends Transport {
     }
     @Override
     public String move(Road road) {
+        return move(this, road);
+    }
+
+    static String move(Transport transport, Road road) {
         if (!(road.getClass() == WaterRoad.class)) {
             return "Cannot sail on " + road;
         }
-        return getType() + super.move(road).replace("moving", "sailing") + "with " + sails + " sails";
+        if (transport instanceof Ship) {
+            Ship ship = (Ship) transport;
+            return ship.getType() + " is sailing on " + road + " with " + ship.sails + " sails";
+        }
+        return "ERROR: unknown transport type!";
+        
     }
 }

@@ -18,6 +18,14 @@ public class Vehicle extends Transport {
         if (!(road.getClass() == Road.class)) {
             return "Cannot drive on " + road;
         }
-        return getType() + super.move(road).replace("moving", "driving") + "with " + wheels + " wheels";
+        // return super.move(road).replace("moving", "driving") + " with " + wheels + " wheels";
+        return super.move(road).replace("moving", "driving") + " with" + wheels + "wheels";
     }
+
+    // static String move(Transport transport, Road road) {
+    //     if (transport instanceof Vehicle) {
+    //         Vehicle vehicle = (Vehicle) transport;
+    //         return vehicle.
+    //     }
+    // }
 }

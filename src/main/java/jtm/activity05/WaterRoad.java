@@ -15,6 +15,6 @@ public class WaterRoad extends Road {
     @Override
     public String toString() {
         // jtm.activity04.Road;
-        return "WaterRoad" + super.toString();
+        return getClass().getSimpleName() + " " + super.toString();
     }
 }
