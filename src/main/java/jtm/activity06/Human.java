@@ -43,6 +43,6 @@ public class Human implements Humanoid {
 
     @Override
     public String toString() {
-        return "Human: " + getWeight() + " [" + stomach + "]";
+        return getClass().getSimpleName() + ": " + getWeight() + " [" + stomach + "]";
     }
 }
