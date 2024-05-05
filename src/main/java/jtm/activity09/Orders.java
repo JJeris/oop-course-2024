@@ -88,8 +88,9 @@ public class Orders implements Iterator<Order> {
 		if (bulkOrder != null) {
 			bulkOrdersSet.add(bulkOrder);
 		}
-
+		// This has an issue
 		return Collections.sort(bulkOrdersSet);
+
 	}
 
 	// Sort list of orders according to the sorting rules
