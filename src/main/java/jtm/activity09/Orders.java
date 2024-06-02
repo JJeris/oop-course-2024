@@ -89,7 +89,8 @@ public class Orders implements Iterator<Order> {
 			bulkOrdersSet.add(bulkOrder);
 		}
 		// This has an issue
-		return Collections.sort(bulkOrdersSet);
+//		return Collections.sort(bulkOrdersSet);
+		return bulkOrdersSet;
 
 	}
 

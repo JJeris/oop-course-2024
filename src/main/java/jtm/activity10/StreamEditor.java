@@ -1,10 +1,6 @@
 package jtm.activity10;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 
 /*-
  * This is simple text stream editor. It reads text from file/standard input,
@@ -36,13 +32,13 @@ public class StreamEditor {
 	public static void main(String[] args) throws Exception {
 		String inFileName, outFileName; // Names of input and output files
 		int inLineNo = 0; // Line number, which needs to be changed, deleted
-		String content; // String content which needs to be put in line
+		String content = null; // String content which needs to be put in line
 		PrintWriter writer = null; // Buffered writer of characters
 		BufferedReader reader = null; // Buffered reader of characters
 		File inFile; // File for file system operations
 		int curLineNo = 0; // Counter of current/read line of input file
 		String curLineContent; // Content of current line of input file
-		boolean delete = false; // Should delete line?
+//		boolean delete = false; // Should delete line?
 
 		/*- TODO Check number of passed parameters. If they are null or number of
 		 * them is not 4, write to standard error (System.err):
@@ -50,23 +46,48 @@ public class StreamEditor {
 		 * and exit with System.exit(1); to pass error status of finished program.
 		 */
 
+		if (args == null || args.length != 4) {
+			System.err.println("Please use arguments: [-]lineNo (TextToAdd/Replace|-) (inputFile|-) (outputFile|-)");
+			System.exit(1);
+		}
+
 		// TODO Get integer from the 1st argument. Note that line should be
 		// deleted if number is negative.
 		// Hint. Use Integer.parseInt() to parse String into integer
 
+		inLineNo = Integer.parseInt(args[0]);
+
 		// TODO set value of the string from 2nd parameter into content
+
+		if (!args[1].equals("-")) {
+			content = args[1];
+		}
 
 		/*- TODO Initialize new buffered character reader (BufferedReader) and:
 		 * 1. If input file name (3rd parameter) is "-", add reader to the Standard input (System.in).
 		 * 2. Otherwise check if file exists (if it doesn't, create it) and 
 		 *    add reader to this file.
 		 */
+//		reader = args[2].equals("-") ? new BufferedReader(new InputStreamReader(System.in))
+//									 : new BufferedReader(new FileReader(args[2]));
+
+		if (args[2].equals("-")) {
+			reader = new BufferedReader(new InputStreamReader(System.in));
+		} else {
+			File file = new File(args[2]);
+			if (!file.exists()) {
+				file.createNewFile();
+			}
+			reader = new BufferedReader(new FileReader(file));
+		}
 
 		/*- TODO Initialize new buffered character writer (PrintWriter) and:
 		 *  1. If output file name (4th parameter) is "-", add writer to the standard output (System.out)
 		 *  2. Otherwise initialize writer to the file of given name.
 		 */
 
+		writer = args[3].equals("-") ? new PrintWriter(System.out)
+									 : new PrintWriter(new FileWriter(args[3]));
 
 		// TODO Read lines in loop from passed file/standard input till to the
 		// end. Count number of read lines. Before appending line into writer
@@ -75,10 +96,36 @@ public class StreamEditor {
 		// NOTE: append break at the end of written line only if it is NOT null
 		// or empty string!
 
+		while ((curLineContent = reader.readLine()) != null) {
+			curLineNo++;
+
+			if (inLineNo > 0 && curLineNo == inLineNo) {
+				if (content != null && !content.isEmpty()) {
+					writer.println(content);
+				}
+			} else if (inLineNo < 0 && curLineNo == -inLineNo) {
+//				delete = true;
+			} else {
+				writer.println(curLineContent);
+			}
+		}
+
 		// TODO If number of input line is larger than number of lines in file,
 		// pad file with empty lines before necessary line.
+		if (inLineNo > curLineNo) {
+			while(curLineNo < inLineNo - 1) {
+				writer.println();
+				curLineNo++;
+			}
+			writer.println(content);
+		}
+
+
 
 		// TODO flush cache of the writer and close connections of the reader
 		// and writer
+		writer.flush();
+		writer.close();
+		reader.close();
 	}
 }
