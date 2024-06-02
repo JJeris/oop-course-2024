@@ -48,17 +48,96 @@ public class JettyController {
 	}
 
 	// TODO Implement insertTeacher() method
-	public String insertTeacher() {
-		return "";
+	public String insertTeacher(
+			@RequestParam(value = "name", required = false) String name,
+			@RequestParam(value = "surname", required = false) String surname,
+			HttpServletRequest request,
+			HttpServletResponse response
+	) {
+		initManager();
+		StringBuilder sb = new StringBuilder();
+		if (name == null && surname == null) {
+			sb.append("<form action=''>\n");
+			sb.append("Name: <input type='text' name='name' value=''><br/>\n");
+			sb.append("Surname: <input type='text' name='surname' value=''><br/>\n");
+			sb.append("<input type='submit' value='Insert'></form><br/>\n");
+		} else if (name != null && !"".equals(name) && surname != null && !"".equals(surname)) {
+			manager.insertTeacher(name, surname);
+			sb.append("true<br/>\n");
+		} else {
+			sb.append("false<br/>\n");
+			response.setStatus(Response.SC_BAD_REQUEST);
+		}
+		sb.append("<a href='/'>Back</a>\n");
+		return sb.toString();
 	}
 
 	// TODO Implement findTeacher() method
-	public String findTeacher() {
-		return "";
+	public String findTeacher(
+			@RequestParam(value = "name", required = false) String name,
+			@RequestParam(value = "surname", required = false) String surname,
+			HttpServletRequest request,
+			HttpServletResponse response
+		) {
+		initManager();
+		StringBuilder sb = new StringBuilder();
+		if (name == null && surname == null) {
+			sb.append("<form action=''>\n");
+			sb.append("Name: <input type='text' name='name' value=''><br/>\n");
+			sb.append("Surname: <input type='text' name='surname' value=''><br/>\n");
+			sb.append("<input type='submit' value='Find'></form><br/>\n");
+		} else {
+			List<Teacher> teachers = manager.findTeacher(name, surname);
+			sb.append("<form action=''>\n");
+			sb.append("Name: <input type='text' name='name' value=''><br/>\n");
+			sb.append("Surname: <input type='text' name='surname' value=''><br/>\n");
+			sb.append("<input type='submit' value='Find'></form><br/>\n");
+			sb.append("<table>\n");
+			for (Teacher teacher : teachers) {
+				sb.append("<tr>\n");
+				sb.append("<td>").append(teacher.getId()).append("</td>\n");
+				sb.append("<td>").append(StringEscapeUtils.escapeHtml4(teacher.getFirstName())).append("</td>\n");
+				sb.append("<td>").append(StringEscapeUtils.escapeHtml4(teacher.getLastName())).append("</td>\n");
+				sb.append("</tr>\n");
+			}
+			sb.append("</table><br>\n");
+			sb.append("<a href='/'>Back</a>\n");
+		}
+		return sb.toString();
 	}
 
 	// TODO Implement deleteTeacher() method
-	public String deleteTeacher() {
-		return "";
+	public String deleteTeacher(
+			@RequestParam(value = "id", required = false) String id,
+			HttpServletRequest request,
+			HttpServletResponse response
+		) {
+		initManager();
+		StringBuilder sb = new StringBuilder();
+		boolean status = true;
+		if (id == null) {
+			sb.append("<form action=''>\n");
+			sb.append("ID: <input type='text' name='id' value=''><br/>\n");
+			sb.append("<input type='submit' value='Delete'></form><br/>\n");
+		} else {
+			if (!"".equals(id)) {
+				status = manager.deleteTeacher(Integer.parseInt(id));
+				sb.append("true<br/>\n");
+			}
+			else
+				status = false;
+			if (!status) {
+				sb.append("false<br/>\n");
+				response.setStatus(Response.SC_BAD_REQUEST);
+			}
+		}
+		sb.append("<a href='/'>Back</a>\n");
+		return sb.toString();
+	}
+
+	private void initManager() {
+		if (manager == null) {
+			manager = new TeacherManager();
+		}
 	}
 }
