@@ -13,7 +13,7 @@ public class Generics<E extends Number> extends LinkedList<E> {
 	// TODO #2
 	// Use Eclipse code generation prompter to add generated serial version ID
 	// for this class to avoid warning
-
+	private static final long serialVersionUID = 7708818085602746688L;
 	// TODO #3
 	// Select Source— Generate Constructors from Superclass... and select
 	// LinkedList<E>().
