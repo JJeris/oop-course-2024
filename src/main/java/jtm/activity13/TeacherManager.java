@@ -31,7 +31,7 @@ public class TeacherManager {
 		 * server-wise, not just database-wise.
 		 * 3. Set AutoCommit to false and use commit() where necessary in other methods
 		 */
-		try{
+		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
 			conn = DriverManager.getConnection("jdbc:mysql://localhost/?autoReconnect=true&serverTimezone=UTC&characterEncoding=utf8", user, password);
@@ -58,19 +58,18 @@ public class TeacherManager {
 		 *    because table should not be blocked for concurrent write during search
 		 */
 
-		String sql = "SELECT * FROM `database00`.`Teacher` where id=?;";
+		String sql = "SELECT * FROM " + database + ".Teacher where id = ?";
 		PreparedStatement preparedStatement;
 		ResultSet results;
 		try {
 			preparedStatement = conn.prepareStatement(sql);
 			preparedStatement.setInt(1, id);
 			results = preparedStatement.executeQuery();
-
-			if (results.first()) {
+			if (results.next()) {
 				return new Teacher(
-						results.getInt("id"),
-						results.getString("firstname"),
-						results.getString("lastname")
+					results.getInt("id"), 
+					results.getString(2), 
+					results.getString(3)
 				);
 			}
 		} catch (SQLException e) {
@@ -81,7 +80,7 @@ public class TeacherManager {
 			}
 			e.printStackTrace();
 		}
-		return null;
+		return new Teacher();
 	}
 
 	/**
@@ -103,24 +102,25 @@ public class TeacherManager {
 		 */
 //		return null;
 
-		String sql = "SELECT * FROM `database00`.`Teacher` where firstname like ? and lastname like ?;";
+		String sql = "SELECT * FROM " + database + ".Teacher where firstname like ? and lastname like ?";
 		PreparedStatement preparedStatement;
 		ResultSet results;
 		List<Teacher> teachers = new LinkedList<>();
-
 		try {
 			preparedStatement = conn.prepareStatement(sql);
 			preparedStatement.setString(1, "%" + firstName + "%");
 			preparedStatement.setString(2, "%" + lastName + "%");
 			results = preparedStatement.executeQuery();
-			while (results.first()) {
+			
+			while (results.next()) {
 				teachers.add(new Teacher(
-						results.getInt("id"),
-						results.getString("firstname"),
-						results.getString("lastname")
-				));
+					results.getInt("id"), 
+					results.getString(2), 
+					results.getString(3))
+				);
 			}
 		} catch (SQLException e) {
+			
 			try {
 				conn.rollback();
 			} catch (SQLException e1) {
@@ -128,7 +128,6 @@ public class TeacherManager {
 			}
 			e.printStackTrace();
 		}
-
 		return teachers;
 
 
@@ -146,9 +145,8 @@ public class TeacherManager {
 		// TODO #4 Write an sql statement that inserts teacher in database.
 //		return false;
 
-		String sql = "INSERT INTO `database00`.`Teacher` (`firstname`, `lastname`) VALUES (?, ?);";
+		String sql = "INSERT INTO " + database + ".Teacher (firstname, lastname) VALUES ( ?, ?);";
 		PreparedStatement preparedStatement;
-
 		int rowsAffected = 0;
 		try {
 			preparedStatement = conn.prepareStatement(sql);
@@ -157,6 +155,7 @@ public class TeacherManager {
 			rowsAffected = preparedStatement.executeUpdate();
 			conn.commit();
 		} catch (SQLException e) {
+			
 			try {
 				conn.rollback();
 			} catch (SQLException e1) {
@@ -164,8 +163,8 @@ public class TeacherManager {
 			}
 			e.printStackTrace();
 		}
-
-		if (rowsAffected > 0) {
+		
+		if (rowsAffected == 1) {
 			return true;
 		}
 
@@ -183,29 +182,28 @@ public class TeacherManager {
 	 */
 	public boolean insertTeacher(Teacher teacher) {
 		// TODO #5 Write an sql statement that inserts teacher in database.
-		String sql = "INSERT INTO `database00`.`Teacher` (`id`,`firstname`, `lastname`) VALUES (?, ?, ?);";
+		String sql = "INSERT INTO " + database + ".Teacher (id,firstname, lastname) VALUES (?, ?, ?);";
 		PreparedStatement preparedStatement;
 		int rowsAffected = 0;
-
+		
 		try {
 			preparedStatement = conn.prepareStatement(sql);
 			preparedStatement.setInt(1, teacher.getId());
 			preparedStatement.setString(2, teacher.getFirstName());
 			preparedStatement.setString(3, teacher.getLastName());
 			rowsAffected = preparedStatement.executeUpdate();
-
 			conn.commit();
 		} catch (SQLException e) {
+		
 			try {
 				conn.rollback();
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
-
 			e.printStackTrace();
 		}
-
-		if (rowsAffected > 0) {
+		
+		if (rowsAffected == 1) {
 			return true;
 		}
 
@@ -221,9 +219,9 @@ public class TeacherManager {
 	 */
 	public boolean updateTeacher(Teacher teacher) {
 		// TODO #6 Write an sql statement that updates teacher information.
-		String sql = "UPDATE `database00`.`Teacher` SET `firstname` = ? `lastname` = ? WHERE `id` = ?;";
+		String sql = "UPDATE " + database + ".Teacher SET firstname = ?, lastname = ? WHERE (id = ?)";
 		PreparedStatement preparedStatement;
-
+		
 		int rowsAffected = 0;
 		try {
 			preparedStatement = conn.prepareStatement(sql);
@@ -231,10 +229,9 @@ public class TeacherManager {
 			preparedStatement.setString(2, teacher.getLastName());
 			preparedStatement.setInt(3, teacher.getId());
 			rowsAffected = preparedStatement.executeUpdate();
-
 			conn.commit();
 		} catch (SQLException e) {
-
+		
 			try {
 				conn.rollback();
 			} catch (SQLException e1) {
@@ -242,7 +239,7 @@ public class TeacherManager {
 			}
 			e.printStackTrace();
 		}
-
+		
 		if (rowsAffected > 0) {
 			return true;
 		}
@@ -259,19 +256,17 @@ public class TeacherManager {
 	 */
 	public boolean deleteTeacher(int id) {
 		// TODO #7 Write an sql statement that deletes teacher from database.
-		String sql = "DELETE FROM `database00`.`Teacher` WHERE `id` = ?;";
+		String sql = "DELETE FROM " + database + ".Teacher WHERE (id = ?)";
 		PreparedStatement preparedStatement;
-
+		
 		int rowsAffected = 0;
-
+		
 		try {
 			preparedStatement = conn.prepareStatement(sql);
 			preparedStatement.setInt(1, id);
 			rowsAffected = preparedStatement.executeUpdate();
-
 			conn.commit();
 		} catch (SQLException e) {
-
 			try {
 				conn.rollback();
 			} catch (SQLException e1) {
@@ -279,10 +274,11 @@ public class TeacherManager {
 			}
 			e.printStackTrace();
 		}
-
-		if (rowsAffected > 0) {
+		
+		if (rowsAffected == 1) {
 			return true;
 		}
+		
 		return false;
 	}
 

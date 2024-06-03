@@ -33,8 +33,6 @@ public class ArrayFillerManager {
 		ArrayFillerManager.array = new int[arraySize];
 		ArrayFillerManager.latency = latency;
 		ArrayFillerManager.startValue = startValue;
-		threads = new LinkedList<>();
-
 		return array;
 	}
 
@@ -49,11 +47,8 @@ public class ArrayFillerManager {
 		// Note that this method emulates, what would happen if you would send
 		// just small portions of data through media with latency.
 
-		for (int i = 0; i < array.length - 1; i++) {
-			ArrayFiller arrayFiller = new ArrayFiller(latency, startValue, i, i);
-
-			arrayFiller.run();
-
+		for (int i = 0; i < array.length; i++) {
+			(new ArrayFiller(latency, startValue, i, i)).run();
 		}
 	}
 
@@ -64,11 +59,7 @@ public class ArrayFillerManager {
 		// proper "buffering" with large amount of data, but do execution just
 		// in single thread.
 
-		for (int i = 0; i < array.length - 1; i++) {
-			ArrayFiller arrayFiller = new ArrayFiller(latency, startValue, 0, array.length - 1);
-
-			arrayFiller.run();
-		}
+		new ArrayFiller(latency, startValue).run();
 	}
 
 	public static void fillParalelly() {
@@ -86,22 +77,30 @@ public class ArrayFillerManager {
 		// buffering and scaling of the execution.
 
 		int threadCount = 4;
-		int arraySize = array.length;
-		for (int i = 0; i < threadCount; i++) {
-			int from = i * arraySize / threadCount;
-			int to = (i+1) * arraySize / threadCount;
-
-			ArrayFiller arrayFiller = new ArrayFiller(latency, startValue, from, to);
-			Thread thread = new Thread(arrayFiller);
-			threads.add(thread);
+		int length = array.length;
+		int range = length / threadCount;
+		int from = 0;
+		int to = 0;
+		
+		threads = new LinkedList<>();
+		
+		for (int step = 1; step <= threadCount; step++) {
+			to += range;
+			if (step == threadCount) {
+				to = length - 1;
+			}
+				
+			Thread thread = new Thread(new ArrayFiller(latency, startValue, from, to));
 			thread.start();
+			threads.add(thread);
+			from = to + 1;
 		}
 
 		for (Thread thread: threads) {
 			try {
 				thread.join();
 			} catch (InterruptedException e) {
-
+				e.printStackTrace();
 			}
 		}
 	}

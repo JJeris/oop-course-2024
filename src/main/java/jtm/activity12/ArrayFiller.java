@@ -15,16 +15,16 @@ public class ArrayFiller implements Runnable {
 	public ArrayFiller(int latency, int startValue) {
 		// TODO from this constructor call another constructor with more
 		// parameters and fill missing values from beginning till to the end of an array
-		this(latency, startValue, 0, ArrayFillerManager.array.length -1);
+		this(latency, startValue, 0, ArrayFillerManager.array.length - 1);
 	}
 
 	public ArrayFiller(int latency, int startValue, int from, int to) {
 		// TODO save passed values to created filler object
-
 		this.latency = latency;
 		this.startValue = startValue;
 		this.from = from;
 		this.to = to;
+		random = new Random();
 	}
 
 	@Override
@@ -38,12 +38,12 @@ public class ArrayFiller implements Runnable {
 
 		try {
 			Thread.sleep(latency);
-		} catch (InterruptedException e) {
+		} catch(InterruptedException e) {
 
 		}
 
 		for (int i = from; i <= to; i++) {
-			random = new Random(startValue + 1);
+			random = new Random(startValue+i);
 			int value = random.nextInt();
 			if (i < array.length) {
 				array[i] = value;
