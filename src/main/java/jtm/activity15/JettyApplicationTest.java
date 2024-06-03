@@ -41,7 +41,6 @@ import jtm.testsuite.JTMTest;
  * To get more info, how to use it, look at:
  * https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-testing.html
  */
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = JettyApplication.class)
 @WebAppConfiguration

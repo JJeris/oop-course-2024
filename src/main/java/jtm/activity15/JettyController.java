@@ -40,24 +40,24 @@ public class JettyController {
 	// but it shows, how passed request and returned response can be used inside
 	// method
 	public String homePage(@RequestParam(value = "name", required = false) String name, HttpServletRequest request,
-			HttpServletResponse response) {
-		StringBuilder sb = new StringBuilder();
-		sb.append("<a href='/insertTeacher'>Insert teacher<a><br/>\n");
-		sb.append("<a href='/findTeacher'>Find teacher<a><br/>\n");
-		sb.append("<a href='/deleteTeacher'>Delete teacher<a><br/>\n");
-		// Following is also redundant because status is OK by default:
-		response.setStatus(HttpServletResponse.SC_OK);
-		return sb.toString();
+		HttpServletResponse response) {
+			StringBuilder sb = new StringBuilder();
+			sb.append("<a href='/insertTeacher'>Insert teacher<a><br/>\n");
+			sb.append("<a href='/findTeacher'>Find teacher<a><br/>\n");
+			sb.append("<a href='/deleteTeacher'>Delete teacher<a><br/>\n");
+			// Following is also redundant because status is OK by default:
+			response.setStatus(HttpServletResponse.SC_OK);
+			return sb.toString();
 	}
 
-	// TODO Implement insertTeacher() method
+	@GetMapping("/insertTeacher")
+	@ResponseBody
 	public String insertTeacher(
 			@RequestParam(value = "name", required = false) String name,
 			@RequestParam(value = "surname", required = false) String surname,
 			HttpServletRequest request,
-			HttpServletResponse response
-	) {
-		initManager();
+			HttpServletResponse response) {
+			initManager();
 		StringBuilder sb = new StringBuilder();
 		if (name == null && surname == null) {
 			sb.append("<form action=''>\n");
@@ -75,7 +75,8 @@ public class JettyController {
 		return sb.toString();
 	}
 
-	// TODO Implement findTeacher() method
+	@GetMapping("/findTeacher")
+	@ResponseBody
 	public String findTeacher(
 			@RequestParam(value = "name", required = false) String name,
 			@RequestParam(value = "surname", required = false) String surname,
@@ -104,12 +105,14 @@ public class JettyController {
 				sb.append("</tr>\n");
 			}
 			sb.append("</table><br>\n");
-			sb.append("<a href='/'>Back</a>\n");
 		}
+		sb.append("<a href='/'>Back</a>\n");
 		return sb.toString();
 	}
 
 	// TODO Implement deleteTeacher() method
+	@GetMapping("/deleteTeacher")
+	@ResponseBody
 	public String deleteTeacher(
 			@RequestParam(value = "id", required = false) String id,
 			HttpServletRequest request,
