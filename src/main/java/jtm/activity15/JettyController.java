@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import jtm.activity13.Teacher;
 import jtm.activity13.TeacherManager;
 
+import org.apache.catalina.connector.Response;
+import org.apache.commons.lang3.StringEscapeUtils;
+
 
 @Controller
 @RequestMapping(value = "/", produces = "text/html;charset=UTF-8")
