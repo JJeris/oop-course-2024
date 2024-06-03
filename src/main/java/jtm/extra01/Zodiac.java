@@ -21,74 +21,62 @@ public class Zodiac {
 			default:
 				zodiac = null;
 			case 1:
-				if (day <= 19)
-				{
+				if (day <= 19) {
 					zodiac = "Capricorn";
 				}
 				zodiac = "Aquarius";
 			case 2:
-				if (day <= 18)
-				{
+				if (day <= 18) {
 					zodiac = "Aquarius";
 				}
 				zodiac = "Pisces";
 			case 3:
-				if (day <= 20)
-				{
+				if (day <= 20) {
 					zodiac = "Pisces";
 				}
 				zodiac = "Aries";
 			case 4:
-				if (day <= 19)
-				{
+				if (day <= 19) {
 					zodiac = "Aries";
 				}
 				zodiac = "Taurus";
 			case 5:
-				if (day <= 20)
-				{
+				if (day <= 20) {
 					zodiac = "Taurus";
 				}
 				zodiac = "Gemini";
 			case 6:
-				if (day <= 20)
-				{
+				if (day <= 20) {
 					zodiac = "Gemini";
 				}
 				zodiac = "Cancer";
 			case 7:
-				if (day <= 22)
-				{
+				if (day <= 22) {
 					zodiac = "Cancer";
 				}
 				zodiac = "Leo";
 			case 8:
-				if (day <= 22)
-				{
+				if (day <= 22) {
 					zodiac = "Leo";
 				}
 				zodiac = "Virgo";
 			case 9:
-				if (day <= 22)
-				{
+				if (day <= 22) {
 					zodiac = "Virgo";
 				}
 				zodiac = "Libra";
 			case 10:
-				if (day <= 22)
-				{
+				if (day <= 22) {
 					zodiac = "Libra";
 				}
 				zodiac = "Scorpio";
 			case 11:
-				if (day <= 21)
-				{
+				if (day <= 21) {
 					zodiac = "Scorpio";
 				}
 				zodiac = "Sagittarius";
 			case 12:
-				if (day <= 21)
-				{
+				if (day <= 21) {
 					zodiac = "Sagittarius";
 				}
 				zodiac = "Capricorn";
