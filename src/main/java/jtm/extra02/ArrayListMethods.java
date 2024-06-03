@@ -3,6 +3,7 @@ package jtm.extra02;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class ArrayListMethods {
 	List<Integer> myList = new ArrayList<Integer>();
 
@@ -16,13 +17,11 @@ public class ArrayListMethods {
 				myList.add(i);
 			}
 		}
-
 		return myList;
 	}
 
 	public int sumResult() {
 		int sum = 0;
-		// TODO #2: Count element sum of the list
 		for (int i: myList) {
 			sum = sum + i;
 		}
