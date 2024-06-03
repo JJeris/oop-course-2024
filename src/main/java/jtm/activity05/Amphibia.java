@@ -1,7 +1,6 @@
 package jtm.activity05;
 
 import jtm.activity04.Road;
-import jtm.activity04.Transport;
 
 public class Amphibia extends Vehicle {
     // Ship ship;
@@ -17,7 +16,7 @@ public class Amphibia extends Vehicle {
 
     @Override 
     public String move(Road road) {
-        if ((road.getClass() == WaterRoad.class)) {
+        if (road.getClass() == WaterRoad.class) {
             // return Ship.move(new Ship(this.getId(), this.sails), road);
             return getType() + " is sailing on " + road + " with " + sails + " sails";
         }

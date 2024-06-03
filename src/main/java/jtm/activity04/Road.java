@@ -20,7 +20,9 @@ public class Road {
 	 * values or 0 to all object properties
 	 */
 	public Road() {
-		this("", "", 0);
+		this.from = "";
+		this.to = "";
+		this.distance = 0;
 	}
 
 	/*- TODO #3
@@ -29,29 +31,30 @@ public class Road {
 	 * fields
 	 */
 
-	public String getFrom() {
-		return from;
-	}
-
 	public void setFrom(String from) {
 		this.from = from;
 	}
 
-	public String getTo() {
-		return to;
+	public int getDistance() {
+		return this.distance;
+	}
+
+	public void setDistance(int distance) {
+		this.distance = distance;
 	}
 
 	public void setTo(String to) {
 		this.to = to;
 	}
 
-	public int getDistance() {
-		return distance;
+	public String getFrom() {
+		return this.from;
 	}
 
-	public void setDistance(int distance) {
-		this.distance = distance;
+	public String getTo() {
+		return this.to;
 	}
+
 	/*- TODO #4
 	 * Select menu: Source — Generate toString()...
 	 * and implement this method, that it returns String in form:
@@ -66,4 +69,5 @@ public class Road {
 	public String toString() {
 		return from + " — " + to + ", " + distance + "km";
 	}
+
 }

@@ -5,10 +5,11 @@ import jtm.activity04.Transport;
 
 public class Ship extends Transport {
     protected byte sails;
-    
+
     public Ship(String id, float consumption, int tankSize) {
         super(id, consumption, tankSize);
     }
+
     public Ship(String id, byte sails) {
         super(id, 0, 0);
         this.sails = sails;
@@ -19,7 +20,7 @@ public class Ship extends Transport {
     }
 
     static String move(Transport transport, Road road) {
-        if (!(road.getClass() == WaterRoad.class)) {
+        if (road.getClass() != WaterRoad.class) {
             return "Cannot sail on " + road;
         }
         if (transport instanceof Ship) {

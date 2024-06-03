@@ -16,7 +16,7 @@ public class Transport {
 	 * And make fuel tank full.
 	 */
 
-	public Transport(String id,  float consumption, int tankSize) {
+	public Transport(String id, float consumption, int tankSize) {
 		this.id = id;
 		this.tankSize = tankSize;
 		this.consumption = consumption;
@@ -27,36 +27,36 @@ public class Transport {
 	 * and generate public getters for consumption, tankSize, id, and
 	 * fuelInTank fields
 	 */
-	public String getId() {
-		return id;
-	}
-
 	public void setId(String id) {
 		this.id = id;
-	}
-
-	public float getConsumption() {
-		return consumption;
 	}
 
 	public void setConsumption(float consumption) {
 		this.consumption = consumption;
 	}
 
-	public int getTankSize() {
-		return tankSize;
-	}
-
 	public void setTankSize(int tankSize) {
 		this.tankSize = tankSize;
 	}
 
-	public float getFuelInTank() {
-		return fuelInTank;
-	}
-
 	public void setFuelInTank(float fuelInTank) {
 		this.fuelInTank = fuelInTank;
+	}
+
+	public String getId() {
+		return this.id;
+	}
+
+	public float getConsumption() {
+		return this.consumption;
+	}
+
+	public int getTankSize() {
+		return this.tankSize;
+	}
+
+	public float getFuelInTank() {
+		return this.fuelInTank;
 	}
 	/*- TODO #3
 	 * Select menu: Source — Generate toString()...
@@ -69,8 +69,9 @@ public class Transport {
 
 	@Override
 	public String toString() {
-		return String.format("Id:%s cons:%.1fl/100km, tank:%dl, fuel:%.2fl", id, consumption, tankSize, fuelInTank);
+		return String.format(Locale.US, "Id:%s cons:%.1fl/100km, tank:%dl, fuel:%.2fl", id, consumption, tankSize, fuelInTank);
 		// return "Id:" + id + " cons:" + consumption + "l/100km, tank:" + tankSize + "l, fuel:" + String.format(Locale.US, "%.2f", fuelInTank) + "l";
+
 	}
 
 	// Return transport id and type as string e.g. "AAA Transport"
@@ -93,10 +94,7 @@ public class Transport {
 			fuelInTank -= fuelNeeded;
 			return getType() + " is moving on " + road;
 		}
-		// If there is no enough fuel in tank, return string in form:
-		// "Cannot move on From–To, 180km. Necessary
-		// fuel:0.00l, fuel in tank:0.00l"
-		return "Cannot move on " + road + ". Necessary fuel:" + String.format(Locale.US, "%.2f", fuelNeeded) + "l, fuel in tank:" + String.format(Locale.US, "%.2f", fuelInTank) + "l"; 
+		else return "Cannot move on " + road + ". Necessary fuel:" + String.format(Locale.US, "%.2f", fuelNeeded) + "l, fuel in tank:" + String.format(Locale.US, "%.2f", fuelInTank) + "l";
 	}
 
 }

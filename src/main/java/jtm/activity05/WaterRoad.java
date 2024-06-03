@@ -7,8 +7,7 @@ public class WaterRoad extends Road {
     public WaterRoad(String from, String to, int distance) {
         super(from, to, distance);
     }
-
-    public WaterRoad() {
+    public WaterRoad(){
         super();
     }
 
