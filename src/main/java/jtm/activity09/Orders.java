@@ -1,5 +1,10 @@
 package jtm.activity09;
 
+import org.apache.commons.lang3.ObjectUtils.Null;
+import org.mockito.internal.matchers.Or;
+
+import java.util.*;
+
 
 /*- TODO #2
  * Implement Iterator interface with Orders class
@@ -41,18 +46,15 @@ package jtm.activity09;
 //	 *      (which is usual approach when working with iterateable collections).
 //	 */
 //}
-import org.mockito.internal.matchers.Or;
-
-import java.util.*;
 
 public class Orders implements Iterator<Order> {
 	private List<Order> orderList;
-	private int currentIndex;
+	private Iterator iterator;
 
 	// Constructor to create a new empty Orders
 	public Orders() {
 		orderList = new ArrayList<>();
-		currentIndex = -1;
+		iterator = orderList.iterator();
 	}
 
 	// Add passed order to the Orders
@@ -68,29 +70,29 @@ public class Orders implements Iterator<Order> {
 	// Calculate Set of Orders from list
 	public Set<Order> getItemsSet() {
 		Collections.sort(orderList);
-		Set<Order> bulkOrdersSet = new TreeSet<>();
-		Order prevOrder = new Order(null,"",0);
-		Order bulkOrder = null;
+		Set<Order> orderSet = new TreeSet<Order>();
+		Order prev = null;
+		Order current = null;
 
-		for (Order currentOrder : orderList) {
-			if (prevOrder.name.equals(currentOrder.name)) {
-				bulkOrder.customer = bulkOrder.customer + "," + currentOrder.customer;
-				bulkOrder.count = bulkOrder.count + currentOrder.count;
-			} else {
-				if (bulkOrder != null) {
-					bulkOrdersSet.add(bulkOrder);
+		if (hasNext())
+			prev = next();
+
+		while (hasNext()) {
+			current = next();
+			if (current.name.equals(prev.name)) {
+				prev.count = prev.count + current.count;
+				if (!prev.customer.contains(current.customer)) {
+					prev.customer = prev.customer + "," + current.customer;
 				}
-
-				bulkOrder = new Order(currentOrder.customer,currentOrder.name,currentOrder.count);
+			} else {
+				orderSet.add(prev);
+				prev = current;
 			}
-			prevOrder = currentOrder;
+			if (!hasNext()) {
+				orderSet.add(prev);
+			}
 		}
-		if (bulkOrder != null) {
-			bulkOrdersSet.add(bulkOrder);
-		}
-		// This has an issue
-//		return Collections.sort(bulkOrdersSet);
-		return bulkOrdersSet;
+		return orderSet;
 
 	}
 
@@ -99,11 +101,13 @@ public class Orders implements Iterator<Order> {
 		Collections.sort(orderList);
 	}
 
+
 	// Check if there is next Order in Orders
 	@Override
 	public boolean hasNext() {
-		return currentIndex < orderList.size();
+		return iterator.hasNext();
 	}
+
 
 	// Get next Order from Orders
 	@Override
@@ -111,17 +115,17 @@ public class Orders implements Iterator<Order> {
 		if (!hasNext()) {
 			throw new NoSuchElementException();
 		}
-		currentIndex++;
-		return orderList.get(currentIndex);
+		return (Order)iterator.next();
 	}
 
 	// Remove current Order from list
 	public void remove() {
-		if (currentIndex == -1 || currentIndex >= orderList.size()) {
+		try {
+			iterator.remove();
+			iterator = orderList.iterator();
+		} catch (Exception e) {
 			throw new IllegalStateException();
 		}
-		orderList.remove(currentIndex);
-		currentIndex--;
 	}
 
 	// Show list of Orders as a String
