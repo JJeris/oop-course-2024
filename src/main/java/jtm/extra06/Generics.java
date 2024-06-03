@@ -1,5 +1,7 @@
 package jtm.extra06;
 
+import static jtm.extra06.GenericsTest.log;
+
 // TODO #1
 // import statically jtm.extra06.GenericsTest.log StringBuilder object
 // from the closed source unit test
@@ -17,6 +19,12 @@ public class Generics<E extends Number> extends LinkedList<E> {
 	// LinkedList<E>().
 	// And implement extended constructor that after new Generics object is
 	// created, log has appended line "Generics instance created"
+	
+	
+	public Generics() {
+		super();
+		log.append("Generics instance created");
+	}
 
 	// TODO #4
 	// Select menu: Source— Override/Implement methods..., extend LinkedList<E>
@@ -28,9 +36,21 @@ public class Generics<E extends Number> extends LinkedList<E> {
 	// HINT:
 	// You can use this.peek() method to refer to any object being popped from
 	// list
+	@Override
+	public E pop() {
+		E element = super.pop();
+		log.append(element.getClass().getName()).append(": ").append(element).append(" popped\n");
+		return element;
+	}
+
 	// TODO #4.2
 	// override push() method that besides pushing new element into list
 	// log has appended line: "java.lang.Double: 2 pushed", where:
 	// java.lang.Double is actual class name of the value
 	// 2 is its actual value
+	@Override
+	public void push(E e) {
+		log.append(e.getClass().getName()).append(": ").append(e).append(" pushed\n");
+		super.push(e);
+	}
 }

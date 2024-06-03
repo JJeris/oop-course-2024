@@ -15,4 +15,11 @@ public interface MoveStrategy {
 	 *   — reference to the game board Cell of the board has following
 	 */
 	public void move(Crocodile crocodile, Board board);
+
+	public int getMoves();
+
+	public int getCandies();
+
+	public String getType();
+
 }

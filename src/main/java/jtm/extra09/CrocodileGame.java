@@ -11,9 +11,15 @@ public class CrocodileGame {
 	public static List<Crocodile> crocodile; // List of crocodiles
 
 	public static String runGame() {
+
+		float ratio = 0;
+		String type = null;
+		String gameStatus;
 		// TODO #1: Reset game board before each crocodile movement by using
 		// .getClone()
 		// method of the Board
+
+		
 		// TODO #2: Go through the list of Crocodiles and move them on the Board
 		// using
 		// .move() method of crocodile
@@ -24,8 +30,21 @@ public class CrocodileGame {
 		// "Tie"
 		// 2. if score of current crocodile is better return its "getType wins",
 		// e.g. "CrocodileGreedy wins"
-
-		return "";
+		for (Crocodile crocodile : crocodile) {
+			crocodile.move(board.getClone());
+			
+			float currentRatio = crocodile.getCandies() / crocodile.getMoves();
+			System.out.println("currentRatio:" + currentRatio);
+			if ((currentRatio - ratio) > 0.001) {
+				type = crocodile.getClass().getName() + " wins";
+			} else {
+				type = "Tie";
+			}
+			ratio = currentRatio;
+			
+			System.out.println("type:" + type + " ratio:" + ratio);
+		}
+		return type;
 	}
 
 }
