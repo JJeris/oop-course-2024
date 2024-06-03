@@ -1,7 +1,6 @@
 package jtm.extra06;
 
 import static jtm.extra06.GenericsTest.log;
-
 // TODO #1
 // import statically jtm.extra06.GenericsTest.log StringBuilder object
 // from the closed source unit test
@@ -23,7 +22,7 @@ public class Generics<E extends Number> extends LinkedList<E> {
 	
 	public Generics() {
 		super();
-		log.append("Generics instance created");
+		log.append("Generics instance created\n");
 	}
 
 	// TODO #4
@@ -38,9 +37,8 @@ public class Generics<E extends Number> extends LinkedList<E> {
 	// list
 	@Override
 	public E pop() {
-		E element = super.pop();
-		log.append(element.getClass().getName()).append(": ").append(element).append(" popped\n");
-		return element;
+		log.append(super.getFirst().getClass().getTypeName() + ": " + super.getFirst() + " popped\n");
+		return super.pop();
 	}
 
 	// TODO #4.2
@@ -48,9 +46,11 @@ public class Generics<E extends Number> extends LinkedList<E> {
 	// log has appended line: "java.lang.Double: 2 pushed", where:
 	// java.lang.Double is actual class name of the value
 	// 2 is its actual value
+
+
 	@Override
 	public void push(E e) {
-		log.append(e.getClass().getName()).append(": ").append(e).append(" pushed\n");
+		log.append(e.getClass().getTypeName() + ": " + e + " pushed\n");
 		super.push(e);
 	}
 }
