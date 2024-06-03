@@ -17,9 +17,11 @@ public class Human implements Humanoid {
 
     @Override
     public Integer vomit() {
-        int tmp = stomach;
-        stomach = 0;
-        return tmp;
+        int temp = stomach;
+        if (stomach > 0) {
+            stomach = 0;
+        }
+        return temp;
     }
 
     @Override
@@ -33,7 +35,7 @@ public class Human implements Humanoid {
     @Override
     public String killHimself() {
         alive = false;
-        return isAlive();
+        return this.isAlive();
     }
 
     @Override

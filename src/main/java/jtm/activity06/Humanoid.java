@@ -6,38 +6,38 @@ public interface Humanoid {
 	/**
 	 * Birth weight for Humanoids
 	 */
-    int BirthWeight = 2;
+    final int BirthWeight = 2;
 
 	/**
 	 * //@param If Humanoid's stomach is empty, eat food and gain weight
 	 */
-    void eat(Integer food);
+    public void eat(Integer food);
 
 	/**
 	 * @return eaten food from the stomach
 	 */
-    Object vomit();
+	public Object vomit();
 
 	/**
 	 * @return "Alive" or "Dead" depending on his status
 	 */
-    String isAlive();
+	public String isAlive();
 
 	/**
 	 * @return "Dead" if humanoid successfully killed himself
 	 */
-    String killHimself();
+	public String killHimself();
 
 	/**
 	 * 
 	 * @return current weight = BirthWeight + weight of the stomach of the current
 	 *         humanoid.
 	 */
-    int getWeight();
+	public int getWeight();
 
 	/**
 	 * @return value of Humanoid in form "ImplementingType: weight
 	 *         [contentOfstomach]";
 	 */
-    String toString();
+	public String toString();
 }

@@ -11,7 +11,7 @@ public class Martian implements Humanoid, Alien, Cloneable {
     public void eat(Object item) {
         if (stomach == null) {
             if (item instanceof Human) {
-                ((Human) item).killHimself();
+                ((Human)item).killHimself();
             }
             stomach = item;
         }
@@ -19,7 +19,6 @@ public class Martian implements Humanoid, Alien, Cloneable {
 
     @Override
     public void eat(Integer food) {
-
         eat((Object)food);
     }
 
@@ -37,21 +36,22 @@ public class Martian implements Humanoid, Alien, Cloneable {
         return "I AM IMMORTAL!";
     }
 
+
     @Override
     public String killHimself() {
-        return isAlive();
+        return this.isAlive();
     }
 
     @Override
     public int getWeight() {
         int stomachWeight = 0;
         if (stomach instanceof Integer) {
-            stomachWeight = (Integer) stomach;
-        }  else if (stomach instanceof Humanoid) {
-            stomachWeight = ((Humanoid) stomach).getWeight();
+            stomachWeight = (Integer)stomach;
+        }
+        if (stomach instanceof Humanoid) {
+            stomachWeight = ((Humanoid)stomach).getWeight();
         }
         return stomachWeight + Alien.BirthWeight;
-
     }
 
     @Override
@@ -59,27 +59,31 @@ public class Martian implements Humanoid, Alien, Cloneable {
         return getClass().getSimpleName() + ": " + getWeight() + " [" + stomach + "]";
     }
 
+
     @Override
     public Object clone() throws java.lang.CloneNotSupportedException {
         return clone(this);
     }
 
-    private Object clone(Object current) {
-        if (current instanceof Integer) {
-            return Integer.valueOf((int) current);
+    private Object clone(Object curr) {
+        if (curr instanceof Integer) {
+            return Integer.valueOf((int)curr);
         }
-        if (current instanceof Martian) {
-            Martian tmp = (Martian) current;
+
+        if (curr instanceof Martian) {
+            Martian temp = (Martian)curr;
             Martian clone = new Martian();
-            clone.eat(clone(tmp.stomach));
+            clone.eat(clone(temp.stomach));
             return clone;
         }
-        if (current instanceof Human) {
-            Human tmp = (Human) current;
+
+        if (curr instanceof Human) {
+            Human temp = (Human)curr;
             Human clone = new Human();
-            clone.eat(Integer.valueOf(tmp.stomach));
+            clone.eat(Integer.valueOf(temp.stomach));
             return clone;
         }
+
         return null;
     }
 
